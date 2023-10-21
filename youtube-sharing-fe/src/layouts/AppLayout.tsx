@@ -1,11 +1,12 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import { Layout } from "antd";
 import styled from "styled-components";
 import HeaderComponent from "../components/Header";
+import { Outlet } from "react-router-dom";
 
 const { Header, Footer, Content } = Layout;
 
-const AppLayout = ({ children }: PropsWithChildren) => {
+const AppLayout = () => {
   const d = new Date();
   const year = d.getFullYear();
 
@@ -17,7 +18,9 @@ const AppLayout = ({ children }: PropsWithChildren) => {
             <HeaderComponent />
           </HeaderContent>
         </HeaderStyled>
-        <ContentStyled>{children}</ContentStyled>
+        <ContentStyled>
+          <Outlet />
+        </ContentStyled>
       </MainLayout>
       <LayoutFooter>
         <MainLayout>{`Ⓒ Copyright ${year}`}</MainLayout>
