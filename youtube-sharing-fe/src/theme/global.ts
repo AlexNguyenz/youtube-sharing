@@ -5,4 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: sans-serif;
     margin: 0px;
   }
+  p {
+    margin: 0px;
+  }
 `;

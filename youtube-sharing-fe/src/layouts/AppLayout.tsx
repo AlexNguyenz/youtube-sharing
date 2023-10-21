@@ -1,20 +1,26 @@
 import React, { PropsWithChildren } from "react";
 import { Layout } from "antd";
 import styled from "styled-components";
+import HeaderComponent from "../components/Header";
 
 const { Header, Footer, Content } = Layout;
 
 const AppLayout = ({ children }: PropsWithChildren) => {
+  const d = new Date();
+  const year = d.getFullYear();
+
   return (
     <Container>
       <MainLayout>
         <HeaderStyled>
-          <HeaderContent>HeaderStyled</HeaderContent>
+          <HeaderContent>
+            <HeaderComponent />
+          </HeaderContent>
         </HeaderStyled>
         <ContentStyled>{children}</ContentStyled>
       </MainLayout>
       <LayoutFooter>
-        <MainLayout>Footer</MainLayout>
+        <MainLayout>{`Ⓒ Copyright ${year}`}</MainLayout>
       </LayoutFooter>
     </Container>
   );
@@ -30,8 +36,12 @@ const Container = styled(Layout)`
 const MainLayout = styled(Layout)`
   margin: auto;
   max-width: ${(props) => props.theme.constant.width.maxWidth};
-  width: ${(props) => props.theme.constant.width.maxWidth};
+  width: 100%;
   background-color: transparent;
+
+  @media (max-width: ${(props) => props.theme.breakpoint.xxl}) {
+    padding: 0px 20px;
+  }
 `;
 
 const HeaderStyled = styled(Layout)`
@@ -47,15 +57,21 @@ const HeaderStyled = styled(Layout)`
 
 const HeaderContent = styled(Header)`
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  width: ${(props) => props.theme.constant.width.maxWidth};
+  max-width: ${(props) => props.theme.constant.width.maxWidth};
   background-color: transparent;
   margin: auto;
   padding: 0px;
+  width: 100%;
+
+  @media (max-width: ${(props) => props.theme.breakpoint.xxl}) {
+    padding: 0px 20px;
+  }
 `;
 
 const ContentStyled = styled(Content)`
-  height: 2000px;
-  padding-top: ${(props) => props.theme.constant.height.header};
+  margin-top: ${(props) => props.theme.constant.height.header};
+  padding-top: 20px;
+  padding-bottom: 20px;
 `;
 
 const LayoutFooter = styled(Footer)`

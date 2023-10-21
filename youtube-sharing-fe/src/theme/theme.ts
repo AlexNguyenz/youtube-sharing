@@ -1,11 +1,19 @@
 const CONSTANT = {
   height: {
-    header: "60px",
+    header: "64px",
     bottom: "50px",
   },
   width: {
     maxWidth: "1440px",
   },
+};
+
+const BREAKPOINT = {
+  xs: "375px",
+  sm: "576px",
+  md: "768px",
+  lg: "1200px",
+  xxl: "1440px",
 };
 
 export default {
@@ -17,5 +25,11 @@ export default {
     width: {
       maxWidth: CONSTANT.width.maxWidth,
     },
+  },
+  breakpoint: {
+    xs: BREAKPOINT.xs,
+    md: BREAKPOINT.md,
+    lg: BREAKPOINT.lg,
+    xxl: BREAKPOINT.xxl,
   },
 };

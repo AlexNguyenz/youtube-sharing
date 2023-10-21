@@ -4,7 +4,7 @@ import AppLayout from "../layouts/AppLayout";
 const HomePage = () => {
   return (
     <AppLayout>
-      <p>HomePage</p>
+      <p style={{ width: "100%" }}>HomePage</p>
     </AppLayout>
   );
 };
