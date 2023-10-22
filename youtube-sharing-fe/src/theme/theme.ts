@@ -28,6 +28,7 @@ export default {
   },
   breakpoint: {
     xs: BREAKPOINT.xs,
+    sm: BREAKPOINT.sm,
     md: BREAKPOINT.md,
     lg: BREAKPOINT.lg,
     xxl: BREAKPOINT.xxl,
