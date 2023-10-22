@@ -10,7 +10,7 @@ const Video = () => {
           width="100%"
           height="auto"
           style={{ aspectRatio: "16/9" }}
-          src="https://www.youtube.com/embed/c6t3bW7kx6E?si=RIZN9yYd8n-zOfjd"
+          src="https://www.youtube.com/embed/P5clIleAWfU"
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
