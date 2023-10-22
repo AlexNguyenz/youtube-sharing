@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Result } from "antd";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../constant/route";
+import { ROUTES } from "~/constant/route";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();

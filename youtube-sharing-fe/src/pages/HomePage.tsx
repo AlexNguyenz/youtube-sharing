@@ -1,6 +1,6 @@
 import React from "react";
-import Video from "../components/Video";
 import { styled } from "styled-components";
+import Video from "~/components/Video";
 
 const HomePage = () => {
   return (

@@ -1,8 +1,8 @@
 import React from "react";
 import { Layout } from "antd";
 import styled from "styled-components";
-import HeaderComponent from "../components/Header";
 import { Outlet } from "react-router-dom";
+import HeaderComponent from "~/components/Header";
 
 const { Header, Footer, Content } = Layout;
 
