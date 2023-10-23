@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout } from "antd";
 import styled from "styled-components";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import HeaderComponent from "~/components/Header";
+import { scrollToTop } from "~/utils";
 
 const { Header, Footer, Content } = Layout;
 
 const AppLayout = () => {
   const d = new Date();
   const year = d.getFullYear();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    scrollToTop();
+  }, [navigate]);
 
   return (
     <Container>

@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Button, Drawer as DrawerAntd } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import Form from "./Form";
+import DrawerMenu from "./DrawerMenu";
+import { useRecoilValue } from "recoil";
+import authState, { IAuth } from "~/stores/user";
 
 const Drawer: React.FC = () => {
+  const { email } = useRecoilValue<IAuth>(authState);
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -19,12 +23,12 @@ const Drawer: React.FC = () => {
       <Button icon={<MenuOutlined />} onClick={showDrawer} />
       <DrawerAntd
         width={"100vw"}
-        title="Đăng kí - Đăng nhập"
+        title={email || "Login - Register"}
         placement="right"
         onClose={onClose}
         open={open}
       >
-        <Form />
+        {email ? <DrawerMenu onClose={onClose} /> : <Form onClose={onClose} />}
       </DrawerAntd>
     </>
   );

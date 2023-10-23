@@ -4,6 +4,12 @@ import { Col, Flex, Grid, Row } from "antd";
 import styled from "styled-components";
 import Form from "./Form";
 import Drawer from "./Drawer";
+import UserInfo from "./UserInfo";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "~/constant/route";
+import { scrollToTop } from "~/utils";
+import { useRecoilValue } from "recoil";
+import authState, { IAuth } from "~/stores/user";
 
 const { useBreakpoint } = Grid;
 
@@ -11,6 +17,13 @@ const HeaderComponent = () => {
   const screens = useBreakpoint();
   const isTablet = screens.sm && screens.md;
   const isMobile = screens.xs;
+  const navigate = useNavigate();
+  const { email } = useRecoilValue<IAuth>(authState);
+
+  const handleNavigateHomePage = () => {
+    navigate(ROUTES.HOME);
+    scrollToTop();
+  };
 
   return (
     <RowStyled>
@@ -20,8 +33,11 @@ const HeaderComponent = () => {
           align="center"
           justify={isMobile || isTablet ? "flex-start" : "center"}
         >
-          <HomeFilled style={{ fontSize: isMobile ? "20px" : "30px" }} />
-          <Title>Funny Movies</Title>
+          <HomeFilled
+            style={{ fontSize: isMobile ? "20px" : "30px", cursor: "pointer" }}
+            onClick={handleNavigateHomePage}
+          />
+          <Title onClick={handleNavigateHomePage}>Funny Movies</Title>
         </Flex>
       </Col>
       <Col span={12} xs={0} md={12}>
@@ -31,7 +47,7 @@ const HeaderComponent = () => {
           gap="10px"
           justify="flex-end"
         >
-          <Form />
+          {email ? <UserInfo /> : <Form />}
         </Flex>
       </Col>
       <DrawerWrapper>
@@ -56,6 +72,7 @@ const Title = styled.p`
   padding-left: 20px;
   line-height: 32px;
   transition: all 0.2s ease;
+  cursor: pointer;
 
   @media (max-width: ${(props) => props.theme.breakpoint.md}) {
     font-size: 24px;

@@ -101,6 +101,7 @@ const Description = styled.div`
   }
 
   span {
+    font-size: 16px;
     font-weight: 400;
     display: block;
   }
