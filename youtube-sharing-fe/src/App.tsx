@@ -5,7 +5,7 @@ import AppLayout from "./layouts/AppLayout";
 import SharePage from "./pages/SharePage";
 import NotFound from "./pages/NotFound";
 import { RecoilRoot } from "recoil";
-import PrivateRoute from "./layouts/PrivateRoute";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (
