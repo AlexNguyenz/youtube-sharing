@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { STORAGE_KEY } from "~/constant/localStorage";
 import { useSetRecoilState } from "recoil";
 import authState, { IAuth } from "~/stores/user";
+import { REGEX } from "~/constant/regex";
 
 const { useBreakpoint } = Grid;
 
@@ -38,7 +39,10 @@ const Form: React.FC<Props> = ({ onClose }) => {
         <Controller
           name="email"
           control={control}
-          rules={{ required: true }}
+          rules={{
+            required: true,
+            pattern: { value: REGEX.EMAIL, message: "" },
+          }}
           render={({ field, fieldState: { error } }) => (
             <Input
               style={{ border: `${error ? "1px solid red" : "none"}` }}
@@ -51,7 +55,7 @@ const Form: React.FC<Props> = ({ onClose }) => {
         <Controller
           name="password"
           control={control}
-          rules={{ required: true }}
+          rules={{ required: true, minLength: 8 }}
           render={({ field, fieldState: { error } }) => (
             <Input.Password
               placeholder="Password"

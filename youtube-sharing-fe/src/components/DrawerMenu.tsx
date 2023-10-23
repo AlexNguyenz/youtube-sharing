@@ -25,7 +25,7 @@ const DrawerMenu: React.FC<Props> = ({ onClose }) => {
   return (
     <Flex vertical gap={"10px"}>
       <Button type="primary" onClick={handleNavigateSharePage}>
-        Share video
+        Share a movie
       </Button>
       <Button onClick={handleLogout}>Logout</Button>
     </Flex>

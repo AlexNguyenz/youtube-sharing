@@ -21,7 +21,7 @@ const UserInfo = () => {
     <React.Fragment>
       <p>{auth.email}</p>
       <Button type="primary" onClick={handleNavigateSharingPage}>
-        Share video
+        Share a movie
       </Button>
       <Button onClick={handleLogout}>Logout</Button>
     </React.Fragment>
