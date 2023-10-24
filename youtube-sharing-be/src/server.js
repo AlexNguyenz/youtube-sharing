@@ -1,4 +1,8 @@
 import express from 'express'
+import { connectDB } from './config/db.config.js'
+import authRoute from './routes/authRouter.js'
+import 'dotenv/config'
+
 
 // GET
 // https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2Cstatistics&id={ID_VIDEO}&key={API_KEY_YOUTUBE}
@@ -21,9 +25,15 @@ const app = express()
 const PORT = 8080
 const HOSTNAME = 'localhost'
 
+connectDB()
+
+app.use(express.json())
+
 app.get('/', (req, res) => {
   res.send('Hello world!')
 })
+
+app.use('/', authRoute)
 
 app.listen(PORT, HOSTNAME, () => {
   console.log('run sever')
