@@ -8,9 +8,13 @@ export const authMiddleware = (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: 'Unauthorized' })
   }
+  const tokenSplit = token.split(' ')
 
+  if (tokenSplit[0] !== 'Bearer') {
+    return res.status(401).json({ message: 'Unauthorized' })
+  }
   try {
-    const decodedToken = jwt.verify(token, secret)
+    const decodedToken = jwt.verify(tokenSplit[1], secret)
     req.userData = { userId: decodedToken.userId, email: decodedToken.email }
     next()
   } catch (error) {

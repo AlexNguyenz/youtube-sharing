@@ -1,6 +1,7 @@
 import express from 'express'
 import { connectDB } from './config/db.config.js'
-import authRoute from './routes/authRouter.js'
+import authRoute from './routes/authRoute.js'
+import videoRoute from './routes/videoRoute.js'
 import 'dotenv/config'
 
 
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/', authRoute)
+app.use('/', videoRoute)
 
 app.listen(PORT, HOSTNAME, () => {
   console.log('run sever')

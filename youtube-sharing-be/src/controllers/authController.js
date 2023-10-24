@@ -35,11 +35,14 @@ export const login = async (req, res) => {
       return res.status(400).json(errors)
     }
 
-    const { token, user } = await authService.loginUser(email, password)
-    res.status(201).json({ user: user, accessToken: token })
+    const { success, message, token, user } = await authService.loginUser(email, password)
+    if (!success) {
+      return res.status(403).json({ message })
+    }
+    return res.status(200).json({ user: user, accessToken: token })
 
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Internal Server Error' })
+    return res.status(500).json({ message: 'Internal Server Error' })
   }
 }
