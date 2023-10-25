@@ -22,6 +22,9 @@ const shareVideo = async (url, email) => {
     return { success: false, message: 'Invalid url' }
   } catch (error) {
     console.error(error)
+    if (error.status && error.message) {
+      throw new Error(error)
+    }
     return { success: false, message: 'Internal Server Error' }
   }
 }

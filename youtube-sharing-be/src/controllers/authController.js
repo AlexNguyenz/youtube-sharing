@@ -20,7 +20,8 @@ export const register = async (req, res) => {
 
     const token = generateToken(newUser)
 
-    res.status(201).json({ user: newUser, token })
+
+    res.status(201).json({ user: { _id: newUser._id, email: newUser.email }, accessToken: token })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Internal Server Error' })
@@ -39,7 +40,8 @@ export const login = async (req, res) => {
     if (!success) {
       return res.status(403).json({ message })
     }
-    return res.status(200).json({ user: user, accessToken: token })
+    return res.status(200).json({ user: { _id: user._id, email: user.email }, accessToken: token })
+
 
   } catch (error) {
     console.error(error)

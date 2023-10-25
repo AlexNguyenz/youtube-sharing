@@ -1,5 +1,6 @@
 import express from 'express'
 import http from 'http'
+import cors from 'cors'
 import { Server as socketIo } from 'socket.io'
 import { connectDB } from './config/db.config.js'
 import authRoute from './routes/authRoute.js'
@@ -21,6 +22,8 @@ io.on('connection', (socket) => {
 })
 
 app.use(express.json())
+app.use(cors())
+
 app.use((req, res, next) => {
   res.io = io
   next()

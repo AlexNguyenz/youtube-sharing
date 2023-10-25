@@ -1,5 +1,6 @@
 import { atom } from "recoil";
 import { STORAGE_KEY } from "~/constant/localStorage";
+import { getLocalStorage } from "~/utils/storage";
 
 export interface IAuth {
   email: string;
@@ -9,8 +10,8 @@ export interface IAuth {
 const authState = atom<IAuth>({
   key: "authState",
   default: {
-    email: localStorage.getItem(STORAGE_KEY.EMAIL) || "",
-    accessToken: localStorage.getItem(STORAGE_KEY.ACCESS_TOKEN) || "",
+    email: getLocalStorage(STORAGE_KEY.EMAIL) || "",
+    accessToken: getLocalStorage(STORAGE_KEY.ACCESS_TOKEN) || "",
   },
 });
 

@@ -5,6 +5,8 @@ import { STORAGE_KEY } from "~/constant/localStorage";
 import { useSetRecoilState } from "recoil";
 import authState, { IAuth } from "~/stores/user";
 import { REGEX } from "~/constant/regex";
+import { loginApi, registerApi } from "~/apis/auth/auth";
+import { saveStorage } from "~/utils/storage";
 
 const { useBreakpoint } = Grid;
 
@@ -25,11 +27,56 @@ const Form: React.FC<Props> = ({ onClose }) => {
   const [buttonType, setButtonType] = useState<ButtonType | null>(null);
   const { handleSubmit, control } = useForm<FormInput>();
   const setAuth = useSetRecoilState<IAuth>(authState);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleLogin = async (data: FormInput) => {
+    try {
+      setLoading(true);
+      const body = {
+        email: data.email,
+        password: data.password,
+      };
+      const response = await loginApi(body);
+      setAuth((preState) => ({
+        ...preState,
+        email: response.user.email,
+        accessToken: response.accessToken,
+      }));
+      saveStorage({
+        email: response.user.email,
+        accessToken: response.accessToken,
+      });
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRegister = async (data: FormInput) => {
+    try {
+      setLoading(true);
+
+      const body = {
+        email: data.email,
+        password: data.password,
+      };
+      const response = await registerApi(body);
+      setAuth((preState) => ({ ...preState, email: response.user.email }));
+      localStorage.setItem(STORAGE_KEY.EMAIL, response.user.email);
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onSubmit = (data: FormInput) => {
-    console.log(buttonType);
-    localStorage.setItem(STORAGE_KEY.EMAIL, data.email);
-    setAuth((preState) => ({ ...preState, email: data.email }));
+    if (buttonType === "login") {
+      handleLogin(data);
+    } else {
+      handleRegister(data);
+    }
     onClose?.();
   };
 
@@ -69,10 +116,15 @@ const Form: React.FC<Props> = ({ onClose }) => {
           type="primary"
           htmlType="submit"
           onClick={() => setButtonType("login")}
+          loading={buttonType === "login" && loading}
         >
           Login
         </Button>
-        <Button htmlType="submit" onClick={() => setButtonType("register")}>
+        <Button
+          htmlType="submit"
+          onClick={() => setButtonType("register")}
+          loading={buttonType === "register" && loading}
+        >
           Register
         </Button>
       </Flex>

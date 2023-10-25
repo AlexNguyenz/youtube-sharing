@@ -5,8 +5,8 @@ import { ROUTES } from "~/constant/route";
 import authState, { IAuth } from "~/stores/user";
 
 const PrivateRoute = ({ children }: PropsWithChildren) => {
-  const { accessToken } = useRecoilValue<IAuth>(authState);
-  if (!accessToken) {
+  const { accessToken, email } = useRecoilValue<IAuth>(authState);
+  if (!accessToken || !email) {
     return <Navigate to={ROUTES.HOME} />;
   }
   return <>{children}</>;

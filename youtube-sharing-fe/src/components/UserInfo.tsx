@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ROUTES } from "~/constant/route";
 import authState, { IAuth } from "~/stores/user";
+import { clearStorage } from "~/utils/storage";
 
 const UserInfo = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useRecoilState<IAuth>(authState);
 
   const handleLogout = () => {
-    localStorage.clear();
+    clearStorage();
     setAuth({ email: "", accessToken: "" });
     navigate(ROUTES.HOME, { replace: true });
   };

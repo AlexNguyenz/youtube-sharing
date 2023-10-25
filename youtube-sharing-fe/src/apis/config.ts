@@ -1,5 +1,6 @@
 import axios from "axios";
 import { STORAGE_KEY } from "~/constant/localStorage";
+import { getLocalStorage } from "~/utils/storage";
 
 const TIMEOUT = 25 * 1000;
 
@@ -20,7 +21,7 @@ const requestWithoutToken = instance;
 const request = instance;
 
 request.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem(STORAGE_KEY.ACCESS_TOKEN);
+  const accessToken = getLocalStorage(STORAGE_KEY.ACCESS_TOKEN);
   if (accessToken) {
     config.headers.authorization = `Bearer ${accessToken}`;
   }
@@ -28,6 +29,13 @@ request.interceptors.request.use((config) => {
 });
 
 request.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+requestWithoutToken.interceptors.response.use(
   (response) => response,
   (error) => {
     return Promise.reject(error);

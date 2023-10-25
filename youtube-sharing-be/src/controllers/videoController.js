@@ -16,7 +16,9 @@ export const shareVideo = async (req, res) => {
     return res.status(201).json({ video })
 
   } catch (error) {
-    console.error(error)
+    if (error.status && error.message) {
+      res.status(error.status).json({ message: error.message })
+    }
     res.status(500).json({ message: 'Internal Server Error' })
   }
 }
