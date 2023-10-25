@@ -1,8 +1,15 @@
 import React from "react";
 import { Col, Flex, Row } from "antd";
 import styled from "styled-components";
+import { IVideo } from "~/apis/video/type";
+import parse from "html-react-parser";
+import { DislikeOutlined, LikeFilled } from "@ant-design/icons";
+import { formatNumber } from "~/utils/formatNumber";
 
-const Video = () => {
+interface Props {
+  video: IVideo;
+}
+const Video: React.FC<Props> = ({ video }) => {
   return (
     <VideoContainer>
       <Column span={12} xs={24} md={12}>
@@ -10,8 +17,8 @@ const Video = () => {
           width="100%"
           height="auto"
           style={{ aspectRatio: "16/9" }}
-          src="https://www.youtube.com/embed/P5clIleAWfU"
-          title="YouTube video player"
+          src={`https://www.youtube.com/embed/${video.id}`}
+          title={video.title}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
@@ -19,21 +26,25 @@ const Video = () => {
       </Column>
       <Column span={12} xs={24} md={12}>
         <VideoDescription vertical gap={"10px"}>
-          <Title>Video</Title>
+          <Title>{video.title}</Title>
+          <Statistic>
+            <span>
+              <LikeFilled style={{ fontSize: "24px" }} />
+              &nbsp;
+              {formatNumber(video.statistics.likeCount)}
+            </span>
+            <span>
+              <DislikeOutlined style={{ fontSize: "24px" }} />
+              &nbsp;
+              {formatNumber(video.statistics.dislikeCount)}
+            </span>
+          </Statistic>
           <Shared>
-            <span>Shared by:</span> Nam Nguyen
+            <span>Shared by:</span> {video.userEmail}
           </Shared>
           <Description>
             <span>Description:</span>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
-              possimus impedit, dolorum qui sequi sapiente saepe officia id
-              provident ex error ullam minima autem neque perferendis. Quo ut
-              cupiditate explicabo? ossimus impedit, dolorum qui sequi sapiente
-              saepe officia id provident ex error ullam minima autem neque
-              perferendis. Quo ut cupiditate explicabo? provident ex error ullam
-              minima autem neque perferendis. Quo ut cupiditate explicabo?
-            </p>
+            <p>{parse(video.description)}</p>
           </Description>
         </VideoDescription>
       </Column>
@@ -74,6 +85,12 @@ const Title = styled.p`
   color: red;
 `;
 
+const Statistic = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+
 const Shared = styled.p`
   font-size: 18px;
   font-weight: 400;
@@ -84,6 +101,9 @@ const Shared = styled.p`
 const Description = styled.div`
   height: 100%;
   overflow: hidden;
+  span {
+    padding-bottom: 4px;
+  }
 
   p {
     overflow: hidden;

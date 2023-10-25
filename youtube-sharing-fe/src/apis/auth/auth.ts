@@ -18,11 +18,11 @@ export const loginApi = async (body: IAuth) => {
 
 export const registerApi = async (body: IAuth) => {
   try {
-    const response = await requestWithoutToken.post<IAuth, IAuthResponse>(
-      URL.REGISTER,
-      body
-    );
-    return response;
+    const response = await requestWithoutToken.post<
+      IAuth,
+      AxiosResponse<IAuthResponse>
+    >(URL.REGISTER, body);
+    return response.data;
   } catch (error) {
     return axiosErrorHandler(error);
   }

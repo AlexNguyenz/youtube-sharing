@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { IVideo } from "~/apis/video/type";
+import { listVideoApi } from "~/apis/video/video";
 import Video from "~/components/Video";
 
 const HomePage = () => {
+  const [listVideo, setListVideo] = useState<Array<IVideo>>([]);
+
+  const handleGetListVideo = async () => {
+    try {
+      const response = await listVideoApi();
+      setListVideo(response?.list || []);
+    } catch (error: any) {
+      console.log({ error });
+    }
+  };
+
+  useEffect(() => {
+    handleGetListVideo();
+  }, []);
+
   return (
     <ListVideos>
-      {Array(10)
-        .fill(0)
-        .map((_, index) => (
-          <Video key={index} />
-        ))}
+      {listVideo.length &&
+        listVideo.map((video, index) => <Video key={index} video={video} />)}
     </ListVideos>
   );
 };
