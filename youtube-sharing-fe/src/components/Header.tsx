@@ -18,7 +18,8 @@ const HeaderComponent = () => {
   const isTablet = screens.sm && screens.md;
   const isMobile = screens.xs;
   const navigate = useNavigate();
-  const { email } = useRecoilValue<IAuth>(authState);
+  const { email, accessToken } = useRecoilValue<IAuth>(authState);
+  const isLogged = email && accessToken;
 
   const handleNavigateHomePage = () => {
     navigate(ROUTES.HOME);
@@ -47,7 +48,7 @@ const HeaderComponent = () => {
           gap="10px"
           justify="flex-end"
         >
-          {email ? <UserInfo /> : <Form />}
+          {isLogged ? <UserInfo /> : <Form />}
         </Flex>
       </Col>
       <DrawerWrapper>

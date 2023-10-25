@@ -44,7 +44,7 @@ const Video: React.FC<Props> = ({ video }) => {
           </Shared>
           <Description>
             <span>Description:</span>
-            <p>{parse(video.description)}</p>
+            <p>{parse(`${video.description}`)}</p>
           </Description>
         </VideoDescription>
       </Column>

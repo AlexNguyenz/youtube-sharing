@@ -3,6 +3,9 @@ import { Button, Flex, Input, Spin } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { shareVideoApi } from "~/apis/video/video";
+import toastState, { IToast } from "~/stores/toast";
+import { useSetRecoilState } from "recoil";
+import { MESSAGE } from "~/constant/message";
 
 type IShareVideo = {
   url: string;
@@ -11,13 +14,15 @@ type IShareVideo = {
 const SharePage = () => {
   const { control, handleSubmit } = useForm<IShareVideo>();
   const [loading, setLoading] = useState<boolean>(false);
+  const setToast = useSetRecoilState<IToast>(toastState);
 
   const handleShareVideo = async (data: IShareVideo) => {
     try {
       setLoading(true);
       await shareVideoApi(data.url);
+      setToast({ type: "success", message: MESSAGE.SUCCESS.SHARE_VIDEO });
     } catch (error: any) {
-      console.log({ error });
+      setToast({ type: "error", message: error.message });
     } finally {
       setLoading(false);
     }

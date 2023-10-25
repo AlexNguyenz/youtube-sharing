@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Button, Flex, Grid, Input } from "antd";
 import { Controller, useForm } from "react-hook-form";
-import { STORAGE_KEY } from "~/constant/localStorage";
 import { useSetRecoilState } from "recoil";
 import authState, { IAuth } from "~/stores/user";
 import { REGEX } from "~/constant/regex";
 import { loginApi, registerApi } from "~/apis/auth/auth";
 import { saveStorage } from "~/utils/storage";
+import toastState, { IToast } from "~/stores/toast";
+import { MESSAGE } from "~/constant/message";
 
 const { useBreakpoint } = Grid;
 
@@ -25,9 +26,10 @@ const Form: React.FC<Props> = ({ onClose }) => {
   const screens = useBreakpoint();
   const isMobile = screens.xs;
   const [buttonType, setButtonType] = useState<ButtonType | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const { handleSubmit, control } = useForm<FormInput>();
   const setAuth = useSetRecoilState<IAuth>(authState);
-  const [loading, setLoading] = useState<boolean>(false);
+  const setToast = useSetRecoilState<IToast>(toastState);
 
   const handleLogin = async (data: FormInput) => {
     try {
@@ -46,8 +48,9 @@ const Form: React.FC<Props> = ({ onClose }) => {
         email: response.user.email,
         accessToken: response.accessToken,
       });
+      setToast({ type: "success", message: MESSAGE.SUCCESS.LOGIN });
     } catch (error: any) {
-      console.log(error.message);
+      setToast({ type: "error", message: error.message });
     } finally {
       setLoading(false);
     }
@@ -62,10 +65,18 @@ const Form: React.FC<Props> = ({ onClose }) => {
         password: data.password,
       };
       const response = await registerApi(body);
-      setAuth((preState) => ({ ...preState, email: response.user.email }));
-      localStorage.setItem(STORAGE_KEY.EMAIL, response.user.email);
+      setAuth((preState) => ({
+        ...preState,
+        email: response.user.email,
+        accessToken: response.accessToken,
+      }));
+      saveStorage({
+        email: response.user.email,
+        accessToken: response.accessToken,
+      });
+      setToast({ type: "success", message: MESSAGE.SUCCESS.REGISTER });
     } catch (error: any) {
-      console.log(error.message);
+      setToast({ type: "error", message: error.message });
     } finally {
       setLoading(false);
     }
