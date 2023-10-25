@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Button, Drawer as DrawerAntd } from "antd";
+import { Button, Drawer as DrawerAntd, Space } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import Form from "./Form";
 import DrawerMenu from "./DrawerMenu";
 import { useRecoilValue } from "recoil";
 import authState, { IAuth } from "~/stores/user";
+import Notification from "./Notification";
 
 const Drawer: React.FC = () => {
   const { email } = useRecoilValue<IAuth>(authState);
@@ -20,7 +21,10 @@ const Drawer: React.FC = () => {
 
   return (
     <>
-      <Button icon={<MenuOutlined />} onClick={showDrawer} />
+      <Space>
+        <Button icon={<MenuOutlined />} onClick={showDrawer} />
+        <Notification />
+      </Space>
       <DrawerAntd
         width={"100vw"}
         title={email || "Login - Register"}

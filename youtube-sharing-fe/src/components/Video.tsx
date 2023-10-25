@@ -77,12 +77,24 @@ const VideoDescription = styled(Flex)`
   @media (max-width: ${(props) => props.theme.breakpoint.md}) {
     padding: 10px 0px;
   }
+
+  @media (min-width: ${(props) => props.theme.breakpoint.md}) {
+    padding: 0px 20px 0px;
+  }
+
+  @media (min-width: 1000px) {
+    padding: 20px;
+  }
 `;
 
 const Title = styled.p`
   font-size: 24px;
   font-weight: 500;
   color: red;
+
+  @media (max-width: ${(props) => props.theme.breakpoint.sm}) {
+    font-size: 20px;
+  }
 `;
 
 const Statistic = styled.div`
@@ -117,6 +129,14 @@ const Description = styled.div`
 
     @media (max-width: ${(props) => props.theme.breakpoint.md}) {
       -webkit-line-clamp: 2;
+    }
+
+    @media (min-width: ${(props) => props.theme.breakpoint.md}) {
+      -webkit-line-clamp: 3;
+    }
+
+    @media (min-width: 1000px) {
+      -webkit-line-clamp: 4;
     }
   }
 

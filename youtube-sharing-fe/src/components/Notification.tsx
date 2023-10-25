@@ -19,8 +19,8 @@ const Notification = () => {
       <NotificationContainer vertical gap={"10px"}>
         {notification.notifications.map((item, index) => (
           <NotificationItem key={index}>
-            <p>{item.title}</p>
-            <p>{`Shared by ${item.email}`}</p>
+            <Title>{item.title}</Title>
+            <Email>{`Shared by ${item.email}`}</Email>
           </NotificationItem>
         ))}
       </NotificationContainer>
@@ -54,9 +54,15 @@ export default Notification;
 
 const NotificationContainer = styled(Flex)`
   max-height: 500px;
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
-  min-width: 300px;
+  max-width: 300px;
+  width: 300px;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
 `;
 
 const NotificationItem = styled.div`
@@ -67,4 +73,20 @@ const NotificationItem = styled.div`
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
+`;
+
+const Title = styled.p`
+  font-weight: 700;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
+const Email = styled.p`
+  font-weight: 500;
+  color: gray;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;

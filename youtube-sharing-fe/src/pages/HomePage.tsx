@@ -31,7 +31,7 @@ const HomePage = () => {
   return (
     <Spin spinning={loading}>
       <ListVideos>
-        {listVideo.length &&
+        {listVideo.length > 0 &&
           listVideo.map((video, index) => <Video key={index} video={video} />)}
       </ListVideos>
     </Spin>
