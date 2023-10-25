@@ -20,7 +20,7 @@ export const shareVideoApi = async (url: string) => {
     const response = await requestWithoutToken.post<
       string,
       AxiosResponse<IVideo>
-    >(URL.LIST_VIDEO, {
+    >(URL.SHARE_VIDEO, {
       url,
     });
     return response.data;

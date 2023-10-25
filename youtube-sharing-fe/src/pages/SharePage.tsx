@@ -1,7 +1,8 @@
-import React from "react";
-import { Button, Flex, Input } from "antd";
+import React, { useState } from "react";
+import { Button, Flex, Input, Spin } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components";
+import { shareVideoApi } from "~/apis/video/video";
 
 type IShareVideo = {
   url: string;
@@ -9,34 +10,49 @@ type IShareVideo = {
 
 const SharePage = () => {
   const { control, handleSubmit } = useForm<IShareVideo>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleShareVideo = async (data: IShareVideo) => {
+    try {
+      setLoading(true);
+      await shareVideoApi(data.url);
+    } catch (error: any) {
+      console.log({ error });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const onSubmit = (data: IShareVideo) => {
-    console.log(data);
+    handleShareVideo(data);
   };
   return (
-    <Flex justify="center" align="center" style={{ minHeight: "500px" }}>
-      <Container>
-        <Title>Share a Youtube movie</Title>
-        <FormStyled onSubmit={handleSubmit(onSubmit)}>
-          <Label htmlFor="url">Youtube URL:</Label>
-          <Controller
-            name="url"
-            control={control}
-            rules={{ required: true }}
-            render={({ field, fieldState: { error } }) => (
-              <Input
-                id="url"
-                {...field}
-                autoFocus
-                style={{ border: `${error ? "1px solid red" : "none"}` }}
-              />
-            )}
-          />
-          <Button type="primary" htmlType="submit">
-            Share
-          </Button>
-        </FormStyled>
-      </Container>
-    </Flex>
+    <Spin spinning={loading}>
+      <Flex justify="center" align="center" style={{ minHeight: "500px" }}>
+        <Container>
+          <Title>Share a Youtube movie</Title>
+          <FormStyled onSubmit={handleSubmit(onSubmit)}>
+            <Label htmlFor="url">Youtube URL:</Label>
+            <Controller
+              name="url"
+              control={control}
+              rules={{ required: true }}
+              render={({ field, fieldState: { error } }) => (
+                <Input
+                  id="url"
+                  {...field}
+                  autoFocus
+                  style={{ border: `${error ? "1px solid red" : "none"}` }}
+                />
+              )}
+            />
+            <Button type="primary" htmlType="submit">
+              Share
+            </Button>
+          </FormStyled>
+        </Container>
+      </Flex>
+    </Spin>
   );
 };
 
