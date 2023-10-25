@@ -32,7 +32,7 @@ export const login = async (req, res) => {
     const { email, password } = req.body
     const { errors, valid } = validateAuth(email, password)
     if (!valid) {
-      return res.status(400).json(errors)
+      return res.status(400).json({ message : errors.email || email.password })
     }
 
     const { success, message, token, user } = await authService.loginUser(email, password)

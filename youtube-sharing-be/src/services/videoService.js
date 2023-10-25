@@ -1,4 +1,6 @@
 import Video from '../models/videoModel.js'
+import { getYouTubeVideoId } from '../utils/youtubeUtils.js'
+import youtubeService from './youtubeService.js'
 
 
 const shareVideo = async (url, email) => {
@@ -7,17 +9,17 @@ const shareVideo = async (url, email) => {
     if (existingUser) {
       return { success: false, message: 'Video already exists' }
     }
-    const statistics= {
-      viewCount: 10,
-      likeCount: 10,
-      dislikeCount:10,
-      favoriteCount: 10,
-      commentCount: 10
+    const idVideo = getYouTubeVideoId(url)
+    if (idVideo) {
+      const { success, message, video } = await youtubeService.getVideo(idVideo)
+      if (!success && message) return { success, message }
+      if (video) {
+        const newVideo = new Video({ url, ...video, userEmail: email })
+        await newVideo.save()
+        return { success: true, video: newVideo }
+      }
     }
-    const newVideo = new Video({ url, title:'Title', description:'description', statistics, userEmail: email })
-    await newVideo.save()
-
-    return { success: true, video: newVideo }
+    return { success: false, message: 'Invalid url' }
   } catch (error) {
     console.error(error)
     return { success: false, message: 'Internal Server Error' }
