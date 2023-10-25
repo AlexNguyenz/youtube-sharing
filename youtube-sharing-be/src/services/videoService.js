@@ -5,11 +5,11 @@ import youtubeService from './youtubeService.js'
 
 const shareVideo = async (url, email) => {
   try {
-    const existingUser = await Video.findOne({ url })
+    const idVideo = getYouTubeVideoId(url)
+    const existingUser = await Video.findOne({ idVideo })
     if (existingUser) {
       return { success: false, message: 'Video already exists' }
     }
-    const idVideo = getYouTubeVideoId(url)
     if (idVideo) {
       const { success, message, video } = await youtubeService.getVideo(idVideo)
       if (!success && message) return { success, message }
