@@ -7,6 +7,8 @@ import { scrollToTop } from "~/utils";
 import SocketService from "~/socket/socketService";
 import { useRecoilState } from "recoil";
 import notificationState from "~/stores/notification";
+import { getLocalStorage } from "~/utils/storage";
+import { STORAGE_KEY } from "~/constant/localStorage";
 
 const { Header, Footer, Content } = Layout;
 
@@ -14,11 +16,13 @@ const AppLayout = () => {
   const d = new Date();
   const year = d.getFullYear();
   const navigate = useNavigate();
+  const [notification, setNotification] = useRecoilState(notificationState);
+  const email = getLocalStorage(STORAGE_KEY.EMAIL);
+  const accessToken = getLocalStorage(STORAGE_KEY.ACCESS_TOKEN);
+  const isLogged = email && accessToken;
 
   const socketService = SocketService.getInstance();
   const socket = socketService.getSocket();
-  const socketId = socket.id;
-  const [notification, setNotification] = useRecoilState(notificationState);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -26,8 +30,9 @@ const AppLayout = () => {
     });
 
     socket.on("notification", (data) => {
+      const socketId = socket.id;
       const { title, email, sender } = data;
-      if (sender !== socketId) {
+      if (sender !== socketId && isLogged) {
         const newNotification = [
           ...notification.notifications,
           { title, email },
