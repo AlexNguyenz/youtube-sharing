@@ -4,6 +4,9 @@ import styled from "styled-components";
 import { Outlet, useNavigate } from "react-router-dom";
 import HeaderComponent from "~/components/Header";
 import { scrollToTop } from "~/utils";
+import SocketService from "~/socket/socketService";
+import { useRecoilState } from "recoil";
+import notificationState from "~/stores/notification";
 
 const { Header, Footer, Content } = Layout;
 
@@ -11,6 +14,33 @@ const AppLayout = () => {
   const d = new Date();
   const year = d.getFullYear();
   const navigate = useNavigate();
+
+  const socketService = SocketService.getInstance();
+  const socket = socketService.getSocket();
+  const socketId = socket.id;
+  const [notification, setNotification] = useRecoilState(notificationState);
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to socket");
+    });
+
+    socket.on("notification", (data) => {
+      const { title, email, sender } = data;
+      if (sender !== socketId) {
+        const newNotification = [
+          ...notification.notifications,
+          { title, email },
+        ];
+        setNotification({ notifications: newNotification, state: true });
+      }
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("notification");
+    };
+  }, [socket]);
 
   useEffect(() => {
     scrollToTop();

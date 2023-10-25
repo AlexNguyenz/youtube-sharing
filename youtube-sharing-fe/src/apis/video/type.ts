@@ -21,3 +21,8 @@ export interface IVideoStatistics {
 export interface IResponseListVideo {
   list: Array<IVideo>;
 }
+
+export interface IRequestShareVideo {
+  url: string;
+  socketId: string;
+}

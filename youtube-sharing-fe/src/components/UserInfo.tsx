@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { ROUTES } from "~/constant/route";
 import authState, { IAuth } from "~/stores/user";
 import { clearStorage } from "~/utils/storage";
+import Notification from "./Notification";
 
 const UserInfo = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const UserInfo = () => {
   return (
     <React.Fragment>
       <p>{auth.email}</p>
+      <Notification />
       <Button type="primary" onClick={handleNavigateSharingPage}>
         Share a movie
       </Button>

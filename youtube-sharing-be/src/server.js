@@ -9,7 +9,11 @@ import 'dotenv/config'
 
 const PORT = process.env.PORT
 const app = express()
-const server = http.createServer(app)
+
+const originUrl = process.env.NODE_ENV ? process.env.URL_FE: 'http://localhost:3000'
+const server = http.createServer(app, { cors: {
+  origin: originUrl
+} })
 const io = new socketIo(server)
 connectDB()
 

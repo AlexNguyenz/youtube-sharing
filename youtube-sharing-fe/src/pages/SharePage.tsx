@@ -6,6 +6,7 @@ import { shareVideoApi } from "~/apis/video/video";
 import toastState, { IToast } from "~/stores/toast";
 import { useSetRecoilState } from "recoil";
 import { MESSAGE } from "~/constant/message";
+import SocketService from "~/socket/socketService";
 
 type IShareVideo = {
   url: string;
@@ -15,11 +16,15 @@ const SharePage = () => {
   const { control, handleSubmit } = useForm<IShareVideo>();
   const [loading, setLoading] = useState<boolean>(false);
   const setToast = useSetRecoilState<IToast>(toastState);
+  const socketService = SocketService.getInstance();
+  const socket = socketService.getSocket();
+  const socketId = socket.id;
 
   const handleShareVideo = async (data: IShareVideo) => {
     try {
       setLoading(true);
-      await shareVideoApi(data.url);
+      const body = { url: data.url, socketId };
+      await shareVideoApi(body);
       setToast({ type: "success", message: MESSAGE.SUCCESS.SHARE_VIDEO });
     } catch (error: any) {
       setToast({ type: "error", message: error.message });

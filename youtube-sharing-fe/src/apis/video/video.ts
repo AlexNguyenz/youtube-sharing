@@ -1,7 +1,7 @@
 import { URL } from "~/constant/url";
 import { requestWithoutToken } from "../config";
 import { axiosErrorHandler } from "../errorHandler";
-import { IResponseListVideo, IVideo } from "./type";
+import { IRequestShareVideo, IResponseListVideo, IVideo } from "./type";
 import { AxiosResponse } from "axios";
 
 export const listVideoApi = async () => {
@@ -15,14 +15,12 @@ export const listVideoApi = async () => {
   }
 };
 
-export const shareVideoApi = async (url: string) => {
+export const shareVideoApi = async (body: IRequestShareVideo) => {
   try {
     const response = await requestWithoutToken.post<
       string,
       AxiosResponse<IVideo>
-    >(URL.SHARE_VIDEO, {
-      url,
-    });
+    >(URL.SHARE_VIDEO, body);
     return response.data;
   } catch (error) {
     axiosErrorHandler(error);

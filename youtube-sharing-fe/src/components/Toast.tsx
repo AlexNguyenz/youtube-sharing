@@ -19,7 +19,7 @@ const Toast: React.FC = () => {
     if (message) {
       openNotificationWithIcon();
     }
-  }, [type, message]);
+  });
 
   return <>{contextHolder}</>;
 };
