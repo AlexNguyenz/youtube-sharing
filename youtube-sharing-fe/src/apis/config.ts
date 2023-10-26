@@ -4,10 +4,8 @@ import { getLocalStorage } from "~/utils/storage";
 
 const TIMEOUT = 25 * 1000;
 
-const isDEV = import.meta.env.DEV;
-const BASE_URL = isDEV
-  ? import.meta.env.VITE_BASE_URL_LOCALHOST
-  : import.meta.env.VITE_BASE_URL;
+const isDEV = process.env.MODE === "development";
+const BASE_URL = isDEV ? process.env.BASE_URL_LOCALHOST : process.env.BASE_URL;
 
 const instance = axios.create({
   baseURL: BASE_URL,

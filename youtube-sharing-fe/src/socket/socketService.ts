@@ -1,16 +1,14 @@
 import { io, Socket } from "socket.io-client";
 
-const isDEV = import.meta.env.DEV;
-const BASE_URL = isDEV
-  ? import.meta.env.VITE_BASE_URL_LOCALHOST
-  : import.meta.env.VITE_BASE_URL;
+const isDEV = process.env.MODE === "development";
+const BASE_URL = isDEV ? process.env.BASE_URL_LOCALHOST : process.env.BASE_URL;
 
 class SocketService {
   private static instance: SocketService;
   private socket: Socket;
 
   private constructor() {
-    this.socket = io(BASE_URL, { transports: ["websocket"] });
+    this.socket = io(BASE_URL as string, { transports: ["websocket"] });
   }
 
   public static getInstance(): SocketService {
