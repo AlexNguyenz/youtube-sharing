@@ -56,7 +56,7 @@ const SharePage = () => {
                 />
               )}
             />
-            <Button type="primary" htmlType="submit">
+            <Button data-cy="share" type="primary" htmlType="submit">
               Share
             </Button>
           </FormStyled>

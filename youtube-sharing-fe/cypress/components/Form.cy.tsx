@@ -161,7 +161,7 @@ describe("render form", () => {
       cy.get(CONSTANT_DATA_CY.PASSWORD).type("password");
       cy.get(CONSTANT_DATA_CY.LOGIN).click();
       cy.get("span.ant-notification-notice-icon-success").should("exist");
-      cy.get("div.ant-notification-notice-message")
+      cy.get(CONSTANT_DATA_CY.MESSAGE_NOTIFICATION)
         .invoke("text")
         .should("eq", MESSAGE.SUCCESS.LOGIN);
     });
@@ -170,7 +170,7 @@ describe("render form", () => {
       cy.get(CONSTANT_DATA_CY.EMAIL).type("test@example123.com");
       cy.get(CONSTANT_DATA_CY.PASSWORD).type("password");
       cy.get(CONSTANT_DATA_CY.LOGIN).click();
-      cy.get("div.ant-notification-notice-message")
+      cy.get(CONSTANT_DATA_CY.MESSAGE_NOTIFICATION)
         .invoke("text")
         .should("eq", "User not found");
     });
@@ -179,7 +179,7 @@ describe("render form", () => {
       cy.get(CONSTANT_DATA_CY.EMAIL).type("test@example.com");
       cy.get(CONSTANT_DATA_CY.PASSWORD).type("password123");
       cy.get(CONSTANT_DATA_CY.LOGIN).click();
-      cy.get("div.ant-notification-notice-message")
+      cy.get(CONSTANT_DATA_CY.MESSAGE_NOTIFICATION)
         .invoke("text")
         .should("eq", "Invalid credentials");
     });
@@ -198,7 +198,7 @@ describe("render form", () => {
       cy.get(CONSTANT_DATA_CY.EMAIL).type("test@example.com");
       cy.get(CONSTANT_DATA_CY.PASSWORD).type("password");
       cy.get(CONSTANT_DATA_CY.REGISTER).click();
-      cy.get("div.ant-notification-notice-message")
+      cy.get(CONSTANT_DATA_CY.MESSAGE_NOTIFICATION)
         .invoke("text")
         .should("eq", MESSAGE.SUCCESS.REGISTER);
     });
@@ -207,7 +207,7 @@ describe("render form", () => {
       cy.get(CONSTANT_DATA_CY.EMAIL).type("test@example.com");
       cy.get(CONSTANT_DATA_CY.PASSWORD).type("password");
       cy.get(CONSTANT_DATA_CY.REGISTER).click();
-      cy.get("div.ant-notification-notice-message")
+      cy.get(CONSTANT_DATA_CY.MESSAGE_NOTIFICATION)
         .invoke("text")
         .should("eq", "User already exists");
     });

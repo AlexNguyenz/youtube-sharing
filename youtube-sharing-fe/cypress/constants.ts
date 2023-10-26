@@ -9,6 +9,8 @@ export const CONSTANT_DATA_CY = {
   LOGIN: '[data-cy="login"]',
   REGISTER: '[data-cy="register"]',
   MENU: '[data-cy="menu"]',
+  SHARE: '[data-cy="share"]',
+  MESSAGE_NOTIFICATION: "div.ant-notification-notice-message",
 } as const;
 
 export const initAuthState = {

@@ -1,5 +1,5 @@
 import { WrapperWithInitState } from "~/utils/wrapper";
-import { initToastState } from "../constants";
+import { CONSTANT_DATA_CY, initToastState } from "../constants";
 import toastState from "~/stores/toast";
 import Toast from "~/components/Toast";
 
@@ -10,7 +10,7 @@ describe("render toast", () => {
         <Toast />
       </WrapperWithInitState>
     );
-    cy.get("div.ant-notification-notice-message")
+    cy.get(CONSTANT_DATA_CY.MESSAGE_NOTIFICATION)
       .invoke("text")
       .should("eq", initToastState.message);
   });
