@@ -34,7 +34,7 @@ describe("render header", () => {
     cy.get(CONSTANT_DATA_CY.LOGOUT).should("exist");
   });
 
-  it("display correct when not login", () => {
+  it("display correct when haven't login", () => {
     cy.mount(
       <Wrapper>
         <HeaderComponent />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Flex, Grid, Input } from "antd";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FieldErrors, useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import authState, { IAuth } from "~/stores/user";
 import { REGEX } from "~/constant/regex";
@@ -81,6 +81,18 @@ const Form: React.FC<Props> = ({ onClose }) => {
     }
   };
 
+  const handleError = (errors: FieldErrors<FormInput>) => {
+    if (errors.email && errors.password) {
+      return setToast({ type: "error", message: MESSAGE.ERROR.EMAIL_PASSWORD });
+    }
+    if (errors.email) {
+      return setToast({ type: "error", message: MESSAGE.ERROR.EMAIL });
+    }
+    if (errors.password) {
+      return setToast({ type: "error", message: MESSAGE.ERROR.PASSWORD });
+    }
+  };
+
   return (
     <form>
       <Flex gap="10px" vertical={isMobile ? true : false}>
@@ -119,14 +131,14 @@ const Form: React.FC<Props> = ({ onClose }) => {
           data-cy="login"
           type="primary"
           loading={buttonType === "login" && loading}
-          onClick={handleSubmit((data) => handleLogin(data))}
+          onClick={handleSubmit((data) => handleLogin(data), handleError)}
         >
           Login
         </Button>
         <Button
           data-cy="register"
           loading={buttonType === "register" && loading}
-          onClick={handleSubmit((data) => handleRegister(data))}
+          onClick={handleSubmit((data) => handleRegister(data), handleError)}
         >
           Register
         </Button>

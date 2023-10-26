@@ -13,6 +13,11 @@ export const CONSTANT_DATA_CY = {
   MESSAGE_NOTIFICATION: "div.ant-notification-notice-message",
 } as const;
 
+export const mockAccount = {
+  email: "test@gmail.com",
+  password: "123123123",
+};
+
 export const initAuthState = {
   email: "test@gmail.com",
   accessToken: "accessToken@123",
