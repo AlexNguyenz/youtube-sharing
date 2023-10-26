@@ -3,8 +3,8 @@ import authState from "~/stores/user";
 import { Wrapper, WrapperWithInitState } from "~/utils/wrapper";
 import { CONSTANT_DATA_CY, initAuthState } from "../constants";
 
-describe("header", () => {
-  it("render component", () => {
+describe("render header", () => {
+  it("render header component", () => {
     cy.mount(
       <Wrapper>
         <HeaderComponent />

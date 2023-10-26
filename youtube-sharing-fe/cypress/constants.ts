@@ -1,3 +1,5 @@
+import { NotificationType } from "~/components/Toast";
+
 export const CONSTANT_DATA_CY = {
   NOTIFICATION: '[data-cy="notification"]',
   EMAIL: '[data-cy="email"]',
@@ -32,6 +34,11 @@ export const initNotificationStateRead = {
       email: "test@gmail.com",
     },
   ],
+};
+
+export const initToastState = {
+  type: "success" as NotificationType,
+  message: "Successfully",
 };
 
 export const mockVideo = {

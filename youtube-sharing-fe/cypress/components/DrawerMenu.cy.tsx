@@ -2,7 +2,7 @@ import { Wrapper } from "~/utils/wrapper";
 import { CONSTANT_DATA_CY } from "../constants";
 import DrawerMenu from "~/components/DrawerMenu";
 
-describe("drawer menu", () => {
+describe("render drawer menu", () => {
   it("render correct ui", () => {
     const onClose = cy.spy();
     cy.mount(

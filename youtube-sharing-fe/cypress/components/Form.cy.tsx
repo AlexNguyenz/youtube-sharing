@@ -4,7 +4,7 @@ import { Wrapper } from "~/utils/wrapper";
 import { CONSTANT_DATA_CY } from "../constants";
 import { MESSAGE } from "~/constant/message";
 
-describe("form", () => {
+describe("render form", () => {
   it("render userInfo component", () => {
     cy.mount(
       <Wrapper>

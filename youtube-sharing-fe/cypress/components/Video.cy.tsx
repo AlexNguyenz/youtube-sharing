@@ -3,7 +3,7 @@ import { mockVideo } from "../constants";
 import Video from "~/components/Video";
 import { formatNumber } from "~/utils/formatNumber";
 
-describe("drawer notification", () => {
+describe("render notification", () => {
   it("render correct ui", () => {
     cy.mount(
       <Wrapper>

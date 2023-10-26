@@ -3,7 +3,7 @@ import { Wrapper, WrapperWithInitState } from "~/utils/wrapper";
 import { CONSTANT_DATA_CY, initAuthState } from "../constants";
 import Drawer from "~/components/Drawer";
 
-describe("drawer", () => {
+describe("render drawer", () => {
   context("drawer when logged", () => {
     beforeEach(() => {
       cy.mount(

@@ -3,7 +3,7 @@ import authState from "~/stores/user";
 import { WrapperWithInitState } from "~/utils/wrapper";
 import { CONSTANT_DATA_CY, initAuthState } from "../constants";
 
-describe("user info", () => {
+describe("render user info", () => {
   it("render userInfo component", () => {
     cy.mount(
       <WrapperWithInitState recoilState={authState} initValue={initAuthState}>
