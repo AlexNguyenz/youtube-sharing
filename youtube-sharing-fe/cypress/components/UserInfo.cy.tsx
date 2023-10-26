@@ -1,33 +1,21 @@
 import UserInfo from "~/components/UserInfo";
-import { STORAGE_KEY } from "~/constant/localStorage";
-import { Wrapper } from "~/utils/wrapper";
+import authState from "~/stores/user";
+import { WrapperWithInitState } from "~/utils/wrapper";
+import { CONSTANT_DATA_CY, initAuthState } from "../constants";
 
 describe("user info", () => {
   beforeEach(() => {
     cy.mount(
-      <Wrapper>
+      <WrapperWithInitState recoilState={authState} initValue={initAuthState}>
         <UserInfo />
-      </Wrapper>
+      </WrapperWithInitState>
     );
     cy.clearAllLocalStorage();
   });
-  context("display correct ui when no email", () => {
-    it("", () => {
-      cy.window().then((win) => {
-        const email = win.localStorage.getItem(STORAGE_KEY.EMAIL);
-        expect(email).equal(null);
-        cy.get("p").invoke("text").should("have.length", 0);
-      });
-    });
-  });
-
-  context("display correct ui when have email", () => {
-    it("", () => {
-      localStorage.setItem(STORAGE_KEY.EMAIL, "text@example.com");
-      cy.window().then((win) => {
-        const email = win.localStorage.getItem(STORAGE_KEY.EMAIL);
-        cy.get("p").contains(`${email}`);
-      });
-    });
+  it("display correct ui ", () => {
+    cy.get(CONSTANT_DATA_CY.EMAIL).contains(initAuthState.email);
+    cy.get(CONSTANT_DATA_CY.NOTIFICATION).should("exist");
+    cy.get(CONSTANT_DATA_CY.SHARE_MOVIE).should("exist");
+    cy.get(CONSTANT_DATA_CY.LOGOUT).should("exist");
   });
 });

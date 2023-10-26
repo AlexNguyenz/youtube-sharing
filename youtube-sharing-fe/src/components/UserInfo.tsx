@@ -21,12 +21,18 @@ const UserInfo = () => {
   };
   return (
     <React.Fragment>
-      <p>{auth.email}</p>
+      <p data-cy="email">{auth.email}</p>
       <Notification />
-      <Button type="primary" onClick={handleNavigateSharingPage}>
+      <Button
+        data-cy="share-movie"
+        type="primary"
+        onClick={handleNavigateSharingPage}
+      >
         Share a movie
       </Button>
-      <Button onClick={handleLogout}>Logout</Button>
+      <Button data-cy="logout" onClick={handleLogout}>
+        Logout
+      </Button>
     </React.Fragment>
   );
 };

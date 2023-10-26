@@ -11,7 +11,7 @@ describe("form", () => {
     );
   });
 
-  context.skip("display correct form before login", () => {
+  context("display correct form before login", () => {
     it("display input", () => {
       cy.get("input").eq(0).should("have.attr", "placeholder", "Email");
       cy.get("input").eq(1).should("have.attr", "placeholder", "Password");
@@ -28,7 +28,7 @@ describe("form", () => {
     });
   });
 
-  context.skip("validate input", () => {
+  context("validate input", () => {
     it("enter correct email", () => {
       cy.get("input").eq(0).type("test@example.com");
       cy.get("button").contains("Login").click();

@@ -44,7 +44,7 @@ const Notification = () => {
         dot={notification.state}
         style={{ width: "10px", height: "10px", backgroundColor: "#1677ff" }}
       >
-        <Button icon={<BellOutlined />} />
+        <Button data-cy="notification" icon={<BellOutlined />} />
       </Badge>
     </Popover>
   );

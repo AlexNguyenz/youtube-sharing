@@ -100,6 +100,7 @@ const Form: React.FC<Props> = ({ onClose }) => {
           }}
           render={({ field, fieldState: { error } }) => (
             <Input
+              data-cy="email"
               style={{ border: `${error ? "1px solid red" : "none"}` }}
               placeholder="Email"
               {...field}
@@ -113,6 +114,7 @@ const Form: React.FC<Props> = ({ onClose }) => {
           rules={{ required: true, minLength: 8 }}
           render={({ field, fieldState: { error } }) => (
             <Input.Password
+              data-cy="password"
               placeholder="Password"
               {...field}
               style={{ border: `${error ? "1px solid red" : "none"}` }}
@@ -121,6 +123,7 @@ const Form: React.FC<Props> = ({ onClose }) => {
         />
 
         <Button
+          data-cy="login"
           type="primary"
           htmlType="submit"
           onClick={() => setButtonType("login")}
@@ -129,6 +132,7 @@ const Form: React.FC<Props> = ({ onClose }) => {
           Login
         </Button>
         <Button
+          data-cy="register"
           htmlType="submit"
           onClick={() => setButtonType("register")}
           loading={buttonType === "register" && loading}
