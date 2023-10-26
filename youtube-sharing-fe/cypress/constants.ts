@@ -6,6 +6,7 @@ export const CONSTANT_DATA_CY = {
   LOGOUT: '[data-cy="logout"]',
   LOGIN: '[data-cy="login"]',
   REGISTER: '[data-cy="register"]',
+  MENU: '[data-cy="menu"]',
 } as const;
 
 export const initAuthState = {

@@ -8,7 +8,8 @@ import authState, { IAuth } from "~/stores/user";
 import Notification from "./Notification";
 
 const Drawer: React.FC = () => {
-  const { email } = useRecoilValue<IAuth>(authState);
+  const { email, accessToken } = useRecoilValue<IAuth>(authState);
+  const isLogged = email && accessToken;
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -22,8 +23,8 @@ const Drawer: React.FC = () => {
   return (
     <>
       <Space>
-        <Button icon={<MenuOutlined />} onClick={showDrawer} />
-        <Notification />
+        <Button data-cy="menu" icon={<MenuOutlined />} onClick={showDrawer} />
+        {isLogged && <Notification />}
       </Space>
       <DrawerAntd
         width={"100vw"}
@@ -32,7 +33,11 @@ const Drawer: React.FC = () => {
         onClose={onClose}
         open={open}
       >
-        {email ? <DrawerMenu onClose={onClose} /> : <Form onClose={onClose} />}
+        {isLogged ? (
+          <DrawerMenu onClose={onClose} />
+        ) : (
+          <Form onClose={onClose} />
+        )}
       </DrawerAntd>
     </>
   );
