@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Flex, Grid, Input } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
@@ -11,6 +11,8 @@ import { MESSAGE } from "~/constant/message";
 import { IAuthResponse } from "~/apis/auth/types";
 
 const { useBreakpoint } = Grid;
+
+type ButtonType = "login" | "register";
 
 type FormInput = {
   email: string;
@@ -27,6 +29,8 @@ const Form: React.FC<Props> = ({ onClose }) => {
   const { handleSubmit, control } = useForm<FormInput>();
   const setAuth = useSetRecoilState<IAuth>(authState);
   const setToast = useSetRecoilState<IToast>(toastState);
+  const [buttonType, setButtonType] = useState<ButtonType>("login");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const saveUser = (response: IAuthResponse) => {
     setAuth((preState) => ({
@@ -42,6 +46,8 @@ const Form: React.FC<Props> = ({ onClose }) => {
 
   const handleLogin = async (data: FormInput) => {
     try {
+      setButtonType("login");
+      setLoading(true);
       const body = {
         email: data.email,
         password: data.password,
@@ -52,12 +58,15 @@ const Form: React.FC<Props> = ({ onClose }) => {
     } catch (error: any) {
       setToast({ type: "error", message: error.message });
     } finally {
+      setLoading(false);
       onClose?.();
     }
   };
 
   const handleRegister = async (data: FormInput) => {
     try {
+      setButtonType("register");
+      setLoading(true);
       const body = {
         email: data.email,
         password: data.password,
@@ -68,6 +77,7 @@ const Form: React.FC<Props> = ({ onClose }) => {
     } catch (error: any) {
       setToast({ type: "error", message: error.message });
     } finally {
+      setLoading(false);
       onClose?.();
     }
   };
@@ -109,12 +119,14 @@ const Form: React.FC<Props> = ({ onClose }) => {
         <Button
           data-cy="login"
           type="primary"
+          loading={buttonType === "login" && loading}
           onClick={handleSubmit((data) => handleLogin(data))}
         >
           Login
         </Button>
         <Button
           data-cy="register"
+          loading={buttonType === "register" && loading}
           onClick={handleSubmit((data) => handleRegister(data))}
         >
           Register
