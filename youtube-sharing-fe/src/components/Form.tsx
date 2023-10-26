@@ -33,8 +33,7 @@ const Form: React.FC<Props> = ({ onClose }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const saveUser = (response: IAuthResponse) => {
-    setAuth((preState) => ({
-      ...preState,
+    setAuth(() => ({
       email: response.user.email,
       accessToken: response.accessToken,
     }));

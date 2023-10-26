@@ -6,7 +6,7 @@ import youtubeService from './youtubeService.js'
 const shareVideo = async (url, email) => {
   try {
     const idVideo = getYouTubeVideoId(url)
-    const existingUser = await Video.findOne({ idVideo })
+    const existingUser = await Video.findOne({ id: idVideo })
     if (existingUser) {
       return { success: false, message: 'Video already exists' }
     }
