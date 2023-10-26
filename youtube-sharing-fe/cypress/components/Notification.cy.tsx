@@ -7,7 +7,7 @@ import {
 import Notification from "~/components/Notification";
 import notificationState from "~/stores/notification";
 
-describe("drawer notification", () => {
+describe("render notification", () => {
   it("render correct ui", () => {
     cy.mount(
       <Wrapper>
