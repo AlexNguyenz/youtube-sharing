@@ -17,8 +17,6 @@ const MainRoutes = () => {
   const socketService = SocketService.getInstance();
   const socket = socketService.getSocket();
 
-  console.log({ email, accessToken, isLogged });
-
   useEffect(() => {
     socket.on("connect", () => {});
 

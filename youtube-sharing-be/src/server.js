@@ -38,5 +38,5 @@ app.use(videoRoute)
 
 
 server.listen(PORT, () => {
-  console.log('listening on *:8080')
+  console.log('Server running')
 })
