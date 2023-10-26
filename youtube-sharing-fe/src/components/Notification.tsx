@@ -41,6 +41,7 @@ const Notification = () => {
       onOpenChange={handleOpen}
     >
       <Badge
+        data-cy="badge"
         dot={notification.state}
         style={{ width: "10px", height: "10px", backgroundColor: "#1677ff" }}
       >

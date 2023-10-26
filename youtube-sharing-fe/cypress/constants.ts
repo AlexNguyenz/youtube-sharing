@@ -13,3 +13,23 @@ export const initAuthState = {
   email: "test@gmail.com",
   accessToken: "accessToken@123",
 };
+
+export const initNotificationStateUnread = {
+  state: true,
+  notifications: [
+    {
+      title: "Sơn Tùng MTP - Remember Me (SlimV 2017 Mix)",
+      email: "test@gmail.com",
+    },
+  ],
+};
+
+export const initNotificationStateRead = {
+  state: false,
+  notifications: [
+    {
+      title: "Sơn Tùng MTP - Remember Me (SlimV 2017 Mix)",
+      email: "test@gmail.com",
+    },
+  ],
+};
