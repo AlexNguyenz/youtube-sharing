@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "~/constant/route";
 import { useSetRecoilState } from "recoil";
 import authState, { IAuth } from "~/stores/user";
+import { clearStorage } from "~/utils/storage";
 
 interface Props {
   onClose: () => void;
@@ -19,7 +20,7 @@ const DrawerMenu: React.FC<Props> = ({ onClose }) => {
   const handleLogout = () => {
     navigate(ROUTES.HOME, { replace: true });
     setAuth({ email: "", accessToken: "" });
-    localStorage.clear();
+    clearStorage();
     onClose();
   };
   return (

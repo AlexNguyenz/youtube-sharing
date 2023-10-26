@@ -8,6 +8,7 @@ import { loginApi, registerApi } from "~/apis/auth/auth";
 import { saveStorage } from "~/utils/storage";
 import toastState, { IToast } from "~/stores/toast";
 import { MESSAGE } from "~/constant/message";
+import { IAuthResponse } from "~/apis/auth/types";
 
 const { useBreakpoint } = Grid;
 
@@ -31,6 +32,18 @@ const Form: React.FC<Props> = ({ onClose }) => {
   const setAuth = useSetRecoilState<IAuth>(authState);
   const setToast = useSetRecoilState<IToast>(toastState);
 
+  const saveUser = (response: IAuthResponse) => {
+    setAuth((preState) => ({
+      ...preState,
+      email: response.user.email,
+      accessToken: response.accessToken,
+    }));
+    saveStorage({
+      email: response.user.email,
+      accessToken: response.accessToken,
+    });
+  };
+
   const handleLogin = async (data: FormInput) => {
     try {
       setLoading(true);
@@ -39,15 +52,7 @@ const Form: React.FC<Props> = ({ onClose }) => {
         password: data.password,
       };
       const response = await loginApi(body);
-      setAuth((preState) => ({
-        ...preState,
-        email: response.user.email,
-        accessToken: response.accessToken,
-      }));
-      saveStorage({
-        email: response.user.email,
-        accessToken: response.accessToken,
-      });
+      saveUser(response);
       setToast({ type: "success", message: MESSAGE.SUCCESS.LOGIN });
     } catch (error: any) {
       setToast({ type: "error", message: error.message });
@@ -65,15 +70,7 @@ const Form: React.FC<Props> = ({ onClose }) => {
         password: data.password,
       };
       const response = await registerApi(body);
-      setAuth((preState) => ({
-        ...preState,
-        email: response.user.email,
-        accessToken: response.accessToken,
-      }));
-      saveStorage({
-        email: response.user.email,
-        accessToken: response.accessToken,
-      });
+      saveUser(response);
       setToast({ type: "success", message: MESSAGE.SUCCESS.REGISTER });
     } catch (error: any) {
       setToast({ type: "error", message: error.message });

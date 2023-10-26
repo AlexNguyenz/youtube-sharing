@@ -5,10 +5,9 @@ import { Outlet, useNavigate } from "react-router-dom";
 import HeaderComponent from "~/components/Header";
 import { scrollToTop } from "~/utils";
 import SocketService from "~/socket/socketService";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import notificationState from "~/stores/notification";
-import { getLocalStorage } from "~/utils/storage";
-import { STORAGE_KEY } from "~/constant/localStorage";
+import authState from "~/stores/user";
 
 const { Header, Footer, Content } = Layout;
 
@@ -17,8 +16,7 @@ const AppLayout = () => {
   const year = d.getFullYear();
   const navigate = useNavigate();
   const [notification, setNotification] = useRecoilState(notificationState);
-  const email = getLocalStorage(STORAGE_KEY.EMAIL);
-  const accessToken = getLocalStorage(STORAGE_KEY.ACCESS_TOKEN);
+  const { email, accessToken } = useRecoilValue(authState);
   const isLogged = email && accessToken;
 
   const socketService = SocketService.getInstance();
