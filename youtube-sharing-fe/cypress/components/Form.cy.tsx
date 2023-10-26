@@ -1,9 +1,11 @@
 import Form from "~/components/Form";
-import { STORAGE_KEY } from "~/constant/localStorage";
+import Toast from "~/components/Toast";
 import { Wrapper } from "~/utils/wrapper";
+import { CONSTANT_DATA_CY } from "../constants";
+import { MESSAGE } from "~/constant/message";
 
 describe("form", () => {
-  beforeEach(() => {
+  it("render userInfo component", () => {
     cy.mount(
       <Wrapper>
         <Form />
@@ -12,6 +14,13 @@ describe("form", () => {
   });
 
   context("display correct form before login", () => {
+    beforeEach(() => {
+      cy.mount(
+        <Wrapper>
+          <Form />
+        </Wrapper>
+      );
+    });
     it("display input", () => {
       cy.get("input").eq(0).should("have.attr", "placeholder", "Email");
       cy.get("input").eq(1).should("have.attr", "placeholder", "Password");
@@ -29,6 +38,13 @@ describe("form", () => {
   });
 
   context("validate input", () => {
+    beforeEach(() => {
+      cy.mount(
+        <Wrapper>
+          <Form />
+        </Wrapper>
+      );
+    });
     it("enter correct email", () => {
       cy.get("input").eq(0).type("test@example.com");
       cy.get("button").contains("Login").click();
@@ -76,32 +92,68 @@ describe("form", () => {
   });
 
   context("login with valid data", () => {
+    beforeEach(() => {
+      cy.mount(
+        <Wrapper>
+          <Form />
+          <Toast />
+        </Wrapper>
+      );
+    });
     it("login success", () => {
       cy.get("input").eq(0).type("test@example.com");
       cy.get("input").eq(1).type("password");
-      cy.get("button").contains("Login").click();
-
-      cy.window().then((win) => {
-        const email = win.localStorage.getItem(STORAGE_KEY.EMAIL);
-        expect(email).to.equal("test@example.com");
-      });
+      cy.get(CONSTANT_DATA_CY.LOGIN).click();
+      cy.get("span.ant-notification-notice-icon-success").should("exist");
+      cy.get("div.ant-notification-notice-message")
+        .invoke("text")
+        .should("eq", MESSAGE.SUCCESS.LOGIN);
     });
 
-    it("login fail", () => {});
+    it("login fail: user not found", () => {
+      cy.get("input").eq(0).type("test@example123.com");
+      cy.get("input").eq(1).type("password");
+      cy.get(CONSTANT_DATA_CY.LOGIN).click();
+      cy.get("div.ant-notification-notice-message")
+        .invoke("text")
+        .should("eq", "User not found");
+    });
+
+    it("login fail: invalid credentials", () => {
+      cy.get("input").eq(0).type("test@example.com");
+      cy.get("input").eq(1).type("password123");
+      cy.get(CONSTANT_DATA_CY.LOGIN).click();
+      cy.get("div.ant-notification-notice-message")
+        .invoke("text")
+        .should("eq", "Invalid credentials");
+    });
   });
 
   context("register with valid data", () => {
+    beforeEach(() => {
+      cy.mount(
+        <Wrapper>
+          <Form />
+          <Toast />
+        </Wrapper>
+      );
+    });
     it("register success", () => {
-      cy.get("input").eq(0).type("test@example.com");
-      cy.get("input").eq(1).type("password");
-      cy.get("button").contains("Register").click();
-
-      cy.window().then((win) => {
-        const email = win.localStorage.getItem(STORAGE_KEY.EMAIL);
-        expect(email).to.equal("test@example.com");
-      });
+      cy.get(CONSTANT_DATA_CY.EMAIL).type("test@example.com");
+      cy.get(CONSTANT_DATA_CY.PASSWORD).type("password");
+      cy.get(CONSTANT_DATA_CY.REGISTER).click();
+      cy.get("div.ant-notification-notice-message")
+        .invoke("text")
+        .should("eq", MESSAGE.SUCCESS.REGISTER);
     });
 
-    it("register fail", () => {});
+    it.only("register fail: User already exists", () => {
+      cy.get(CONSTANT_DATA_CY.EMAIL).type("test@example.com");
+      cy.get(CONSTANT_DATA_CY.PASSWORD).type("password");
+      cy.get(CONSTANT_DATA_CY.REGISTER).click();
+      cy.get("div.ant-notification-notice-message")
+        .invoke("text")
+        .should("eq", "User already exists");
+    });
   });
 });

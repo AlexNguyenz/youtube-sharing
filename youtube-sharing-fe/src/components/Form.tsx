@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Flex, Grid, Input } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
@@ -17,8 +17,6 @@ type FormInput = {
   password: string;
 };
 
-type ButtonType = "login" | "register";
-
 interface Props {
   onClose?: () => void;
 }
@@ -26,8 +24,6 @@ interface Props {
 const Form: React.FC<Props> = ({ onClose }) => {
   const screens = useBreakpoint();
   const isMobile = screens.xs;
-  const [buttonType, setButtonType] = useState<ButtonType | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
   const { handleSubmit, control } = useForm<FormInput>();
   const setAuth = useSetRecoilState<IAuth>(authState);
   const setToast = useSetRecoilState<IToast>(toastState);
@@ -46,7 +42,6 @@ const Form: React.FC<Props> = ({ onClose }) => {
 
   const handleLogin = async (data: FormInput) => {
     try {
-      setLoading(true);
       const body = {
         email: data.email,
         password: data.password,
@@ -57,14 +52,12 @@ const Form: React.FC<Props> = ({ onClose }) => {
     } catch (error: any) {
       setToast({ type: "error", message: error.message });
     } finally {
-      setLoading(false);
+      onClose?.();
     }
   };
 
   const handleRegister = async (data: FormInput) => {
     try {
-      setLoading(true);
-
       const body = {
         email: data.email,
         password: data.password,
@@ -75,21 +68,12 @@ const Form: React.FC<Props> = ({ onClose }) => {
     } catch (error: any) {
       setToast({ type: "error", message: error.message });
     } finally {
-      setLoading(false);
+      onClose?.();
     }
-  };
-
-  const onSubmit = (data: FormInput) => {
-    if (buttonType === "login") {
-      handleLogin(data);
-    } else {
-      handleRegister(data);
-    }
-    onClose?.();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <Flex gap="10px" vertical={isMobile ? true : false}>
         <Controller
           name="email"
@@ -125,17 +109,13 @@ const Form: React.FC<Props> = ({ onClose }) => {
         <Button
           data-cy="login"
           type="primary"
-          htmlType="submit"
-          onClick={() => setButtonType("login")}
-          loading={buttonType === "login" && loading}
+          onClick={handleSubmit((data) => handleLogin(data))}
         >
           Login
         </Button>
         <Button
           data-cy="register"
-          htmlType="submit"
-          onClick={() => setButtonType("register")}
-          loading={buttonType === "register" && loading}
+          onClick={handleSubmit((data) => handleRegister(data))}
         >
           Register
         </Button>

@@ -4,15 +4,20 @@ import { WrapperWithInitState } from "~/utils/wrapper";
 import { CONSTANT_DATA_CY, initAuthState } from "../constants";
 
 describe("user info", () => {
-  beforeEach(() => {
+  it("render userInfo component", () => {
     cy.mount(
       <WrapperWithInitState recoilState={authState} initValue={initAuthState}>
         <UserInfo />
       </WrapperWithInitState>
     );
-    cy.clearAllLocalStorage();
   });
+
   it("display correct ui ", () => {
+    cy.mount(
+      <WrapperWithInitState recoilState={authState} initValue={initAuthState}>
+        <UserInfo />
+      </WrapperWithInitState>
+    );
     cy.get(CONSTANT_DATA_CY.EMAIL).contains(initAuthState.email);
     cy.get(CONSTANT_DATA_CY.NOTIFICATION).should("exist");
     cy.get(CONSTANT_DATA_CY.SHARE_MOVIE).should("exist");
