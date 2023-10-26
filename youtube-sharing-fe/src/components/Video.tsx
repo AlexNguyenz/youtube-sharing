@@ -26,7 +26,7 @@ const Video: React.FC<Props> = ({ video }) => {
       </Column>
       <Column span={12} xs={24} md={12}>
         <VideoDescription vertical gap={"10px"}>
-          <Title>{video.title}</Title>
+          <Title>{parse(`${video.title}`)}</Title>
           <Statistic>
             <span>
               <LikeFilled style={{ fontSize: "24px" }} />
