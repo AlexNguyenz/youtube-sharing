@@ -28,6 +28,7 @@ git clone https://github.com/AlexNguyenz/youtube-sharing.git
 ## Manual
 
 Install the dependencies and devDependencies and start the server.
+
 [Create an atlas account]
 
 [Install mongoDB compass]
