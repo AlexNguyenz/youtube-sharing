@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { BellOutlined } from "@ant-design/icons";
 import { Badge, Button, Flex, Popover } from "antd";
 import { styled } from "styled-components";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import notificationState from "~/stores/notification";
+import loadingState from "~/stores/loading";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ROUTES } from "~/constant/route";
+import { scrollToTop } from "~/utils";
 
 export interface INotificationItem {
   title: string;
@@ -13,12 +17,24 @@ export interface INotificationItem {
 const Notification = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [notification, setNotification] = useRecoilState(notificationState);
+  const setLoading = useSetRecoilState(loadingState);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const handleReload = () => {
+    if (pathname === ROUTES.HOME) {
+      scrollToTop();
+    } else {
+      navigate(ROUTES.HOME);
+    }
+    setLoading(true);
+  };
 
   const listNotification = () => {
     return (
       <NotificationContainer vertical gap={"10px"}>
         {notification.notifications.map((item, index) => (
-          <NotificationItem key={index}>
+          <NotificationItem key={index} onClick={handleReload}>
             <Title>{item.title}</Title>
             <Email>{`Shared by ${item.email}`}</Email>
           </NotificationItem>

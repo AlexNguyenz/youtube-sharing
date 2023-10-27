@@ -5,11 +5,12 @@ import styled from "styled-components";
 import Form from "./Form";
 import Drawer from "./Drawer";
 import UserInfo from "./UserInfo";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "~/constant/route";
 import { scrollToTop } from "~/utils";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import authState, { IAuth } from "~/stores/user";
+import loadingState from "~/stores/loading";
 
 const { useBreakpoint } = Grid;
 
@@ -18,12 +19,18 @@ const HeaderComponent = () => {
   const isTablet = screens.sm && screens.md;
   const isMobile = screens.xs;
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { email, accessToken } = useRecoilValue<IAuth>(authState);
+  const setLoading = useSetRecoilState(loadingState);
   const isLogged = email && accessToken;
 
   const handleNavigateHomePage = () => {
-    navigate(ROUTES.HOME);
-    scrollToTop();
+    if (pathname === ROUTES.SHARE) {
+      navigate(ROUTES.HOME);
+    } else {
+      scrollToTop();
+    }
+    setLoading(true);
   };
 
   return (
