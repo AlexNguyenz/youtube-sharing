@@ -156,6 +156,17 @@ PORT=8080
 
 Visit: `localhost:3000`
 
+## Usage
+
+- When you access the website, you will see a list of videos that others have shared before
+- You need to log in, or register (if you don't have an account yet) to receive notifications and be able to share the videos you want with everyone
+
+Note:
+
+- You can only receive notifications and share videos after logging in to the website
+- When you log out and log back in, the previous notifications will still be retained
+- Notifications are sent only and not stored in the database, so when you refresh the page or log in from a different location, the old notifications will no longer be available
+
 ## License
 
 MIT
