@@ -1,9 +1,8 @@
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
 import 'dotenv/config'
+import { generateToken } from '../utils/generateToken.js'
 
-const secret = process.env.JWT_SECRET_KEY
 
 const registerUser = async (email, password) => {
   try {
@@ -17,8 +16,7 @@ const registerUser = async (email, password) => {
     const newUser = new User({ email, password: hashedPassword })
     await newUser.save()
 
-    const token = jwt.sign({ userId: newUser._id, email: newUser.email }, secret, { expiresIn: '1h' })
-
+    const token = generateToken(newUser)
     return { success: true, user: newUser, token }
   } catch (error) {
     console.error(error)
@@ -38,8 +36,7 @@ const loginUser = async (email, password) => {
       return { success: false, message: 'Invalid credentials' }
     }
 
-    const token = jwt.sign({ userId: user._id, email: user.email }, secret)
-
+    const token = generateToken({ userId: user._id, email: user.email })
     return { success: true, user, token }
   } catch (error) {
     console.error(error)
