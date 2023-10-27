@@ -14,18 +14,17 @@ const createVideo = async () => {
 
 const createUser = async () => {
   const hashedPassword = await bcrypt.hash(UserJson.password, 12)
-  
   const newUser = new User({ email:UserJson.email, password: hashedPassword })
   await newUser.save()
 }
 
 const seedingData = async () => {
   try {
-    connectDB()
+    await connectDB()
     await createUser()
     await createVideo()
   } catch (error) {
-    
+    console.log(error)
   } finally {
     process.exit()
   }
