@@ -9,7 +9,9 @@ export const validateAuth = (email, password) => {
     errors.email = 'Invalid email address'
   }
 
-  if (password.length < REGEX.PASSWORD) {
+  if (!password.trim()) {
+    errors.password = 'Password field must not be empty'
+  } else if (password.trim().length < REGEX.PASSWORD) {
     errors.password = 'Password must be at least 8 characters long'
   }
 

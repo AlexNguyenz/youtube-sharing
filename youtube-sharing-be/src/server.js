@@ -40,3 +40,5 @@ app.use(videoRoute)
 server.listen(PORT, () => {
   console.log('Server running')
 })
+
+export default server
