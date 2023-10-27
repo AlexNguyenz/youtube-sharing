@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import supertest from 'supertest'
 import server from '../../server.js'
 import 'dotenv/config'
