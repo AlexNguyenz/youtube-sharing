@@ -1,20 +1,23 @@
 import { Button } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { ROUTES } from "~/constant/route";
 import authState, { IAuth } from "~/stores/user";
 import { clearStorage } from "~/utils/storage";
 import Notification from "./Notification";
+import loadingState from "~/stores/loading";
 
 const UserInfo = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useRecoilState<IAuth>(authState);
+  const setLoading = useSetRecoilState(loadingState);
 
   const handleLogout = () => {
     clearStorage();
     setAuth({ email: "", accessToken: "" });
     navigate(ROUTES.HOME, { replace: true });
+    setLoading(true);
   };
   const handleNavigateSharingPage = () => {
     navigate(ROUTES.SHARE);

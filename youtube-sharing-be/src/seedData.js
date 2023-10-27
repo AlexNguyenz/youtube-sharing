@@ -8,7 +8,7 @@ import 'dotenv/config'
 
 
 const createVideo = async () => {
-  const newVideo = new Video({ url:VideoJson.url, ...VideoJson, userEmail: VideoJson.email })
+  const newVideo = new Video({ url:VideoJson.url, ...VideoJson, userEmail: VideoJson.userEmail })
   await newVideo.save()
 }
 

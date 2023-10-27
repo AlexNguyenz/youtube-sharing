@@ -5,6 +5,7 @@ import { ROUTES } from "~/constant/route";
 import { useSetRecoilState } from "recoil";
 import authState, { IAuth } from "~/stores/user";
 import { clearStorage } from "~/utils/storage";
+import loadingState from "~/stores/loading";
 
 interface Props {
   onClose: () => void;
@@ -13,6 +14,8 @@ interface Props {
 const DrawerMenu: React.FC<Props> = ({ onClose }) => {
   const navigate = useNavigate();
   const setAuth = useSetRecoilState<IAuth>(authState);
+  const setLoading = useSetRecoilState(loadingState);
+
   const handleNavigateSharePage = () => {
     navigate(ROUTES.SHARE);
     onClose();
@@ -20,6 +23,7 @@ const DrawerMenu: React.FC<Props> = ({ onClose }) => {
   const handleLogout = () => {
     navigate(ROUTES.HOME, { replace: true });
     setAuth({ email: "", accessToken: "" });
+    setLoading(true);
     clearStorage();
     onClose();
   };

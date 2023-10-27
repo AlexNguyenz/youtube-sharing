@@ -2,12 +2,16 @@ import React from "react";
 import { Button, Result } from "antd";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "~/constant/route";
+import { useSetRecoilState } from "recoil";
+import loadingState from "~/stores/loading";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
+  const setLoading = useSetRecoilState(loadingState);
 
   const handleGoHome = () => {
     navigate(ROUTES.HOME, { replace: true });
+    setLoading(true);
   };
   return (
     <Result
