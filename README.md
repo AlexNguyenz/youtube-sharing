@@ -105,6 +105,8 @@ npm run install
 npm run dev
 ```
 
+Visit: `localhost:3000`
+
 ## Docker
 
 Your system needs to have Docker and Docker Composed installed.
@@ -151,6 +153,8 @@ PORT=8080
 | JWT_SECRET_KEY  | random string            |
 | NODE_ENV        | mode env                 |
 | PORT            | server port on local     |
+
+Visit: `localhost:3000`
 
 ## License
 
