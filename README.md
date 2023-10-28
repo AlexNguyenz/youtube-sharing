@@ -2,6 +2,8 @@
 
 Youtube-sharing is a web application that allows users to share videos from YouTube
 
+Visit [https://youtube-sharing.vercel.app/]
+
 ## Features
 
 - Register - Log in
@@ -179,3 +181,4 @@ MIT
 [Install mongoDB compass]: https://www.mongodb.com/docs/compass/current/install/
 [Create an atlas account]: https://medium.com/@zzpzaf.se/mongodb-atlas-free-shared-database-cluster-891435bec3a9
 [create api key youtube]: https://www.magetop.com/blog/cach-lay-api-key-youtube/#:~:text=C%C3%A1c%20b%C6%B0%E1%BB%9Bc%20%C4%91%E1%BB%83%20l%E1%BA%A5y%20API%20key%20YouTube,-B%C6%B0%E1%BB%9Bc%201%3A%20T%E1%BA%A1o&text=T%E1%BA%A1i%20Library%20c%C3%A1c%20b%E1%BA%A1n%20search,CREDENTIALS%20%C4%91%E1%BB%83%20t%E1%BA%A1o%20API%20key.
+[https://youtube-sharing.vercel.app/]: https://youtube-sharing.vercel.app/
