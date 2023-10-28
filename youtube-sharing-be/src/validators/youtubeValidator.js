@@ -1,4 +1,3 @@
-import { REGEX } from '../constants/regex.js'
 import { getYouTubeVideoId } from '../utils/youtubeUtils.js'
 
 export const validateYoutubeURL = (url) => {
