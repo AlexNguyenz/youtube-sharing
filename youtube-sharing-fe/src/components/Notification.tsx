@@ -21,20 +21,21 @@ const Notification = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const handleReload = () => {
+  const handleClickItemNotification = () => {
     if (pathname === ROUTES.HOME) {
       scrollToTop();
     } else {
       navigate(ROUTES.HOME);
     }
     setLoading(true);
+    setOpen(false);
   };
 
   const listNotification = () => {
     return (
       <NotificationContainer vertical gap={"10px"}>
         {notification.notifications.map((item, index) => (
-          <NotificationItem key={index} onClick={handleReload}>
+          <NotificationItem key={index} onClick={handleClickItemNotification}>
             <Title>{item.title}</Title>
             <Email>{`Shared by ${item.email}`}</Email>
           </NotificationItem>
