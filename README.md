@@ -169,6 +169,11 @@ Note:
 - When you log out and log back in, the previous notifications will still be retained
 - Notifications are sent only and not stored in the database, so when you refresh the page or log in from a different location, the old notifications will no longer be available
 
+## Troubleshooting
+Sometimes when you first access the app, it may take 5-10 minutes for the server to start up. After that, please reload to use it normally.
+
+The error occurs because: Within a certain period, if no requests are made, the server will automatically shut down. Then, when a request comes in, it takes about 5-10 minutes to start up. Because I am using a free web service, downtime may occur. I apologize for any inconvenience this may cause.
+
 ## License
 
 MIT
