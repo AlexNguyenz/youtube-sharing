@@ -16,7 +16,7 @@ const HomePage = () => {
   const handleGetListVideo = async () => {
     try {
       const response = await listVideoApi();
-      setListVideo(response?.list || []);
+      setListVideo(response.list);
     } catch (error: any) {
       setToast({ type: "error", message: error.message });
     } finally {

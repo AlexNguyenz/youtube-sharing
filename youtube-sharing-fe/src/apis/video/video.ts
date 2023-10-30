@@ -11,18 +11,18 @@ export const listVideoApi = async () => {
     );
     return response.data;
   } catch (error) {
-    axiosErrorHandler(error);
+    return axiosErrorHandler(error);
   }
 };
 
 export const shareVideoApi = async (body: IRequestShareVideo) => {
   try {
-    const response = await request.post<string, AxiosResponse<IVideo>>(
-      URL.SHARE_VIDEO,
-      body
-    );
+    const response = await request.post<
+      IRequestShareVideo,
+      AxiosResponse<IVideo>
+    >(URL.SHARE_VIDEO, body);
     return response.data;
   } catch (error) {
-    axiosErrorHandler(error);
+    return axiosErrorHandler(error);
   }
 };
