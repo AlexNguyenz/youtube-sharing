@@ -6,5 +6,5 @@ interface IError {
 
 export const axiosErrorHandler = (err: unknown) => {
   const error = err as AxiosError<IError>;
-  throw new Error(error.response?.data.message);
+  throw new Error(error.response?.data?.message || error.message);
 };
